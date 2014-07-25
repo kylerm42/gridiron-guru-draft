@@ -1,3 +1,16 @@
+# == Schema Information
+#
+# Table name: leagues
+#
+#  id              :integer          not null, primary key
+#  name            :string(255)      not null
+#  manager_id      :integer          not null
+#  number_of_teams :integer          default(10), not null
+#  password_digest :string(255)      not null
+#  created_at      :datetime
+#  updated_at      :datetime
+#
+
 # Read about factories at https://github.com/thoughtbot/factory_girl
 
 FactoryGirl.define do

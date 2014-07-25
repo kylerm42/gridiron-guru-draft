@@ -4,7 +4,7 @@ class CreateLeagues < ActiveRecord::Migration
       t.string  :name,              null: false
       t.integer :manager_id,        null: false
       t.integer :number_of_teams,   null: false, default: 10
-      t.string  :token,             null: false
+      t.string  :password_digest,   null: false
 
       t.timestamps
     end
