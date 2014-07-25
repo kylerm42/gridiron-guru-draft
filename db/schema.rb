@@ -20,7 +20,7 @@ ActiveRecord::Schema.define(version: 20140725031007) do
     t.string   "name",                         null: false
     t.integer  "manager_id",                   null: false
     t.integer  "number_of_teams", default: 10, null: false
-    t.string   "token",                        null: false
+    t.string   "password_digest",              null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end

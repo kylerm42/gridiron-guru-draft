@@ -1,0 +1,13 @@
+<%= form_for @league, url: { action: :create } do |f| %>
+  <%= f.label :name, "League name" %>
+  <%= f.text_field :name %>
+
+  <%= f.label :password, "League password" %>
+  <%= f.password_field :password %>
+
+  <%= f.label :password_confirm, "Confirm password" %>
+  <%= f.password_field :password_confirm %>
+
+  <%= f.submit "Create league" %>
+<% end %>
+  
