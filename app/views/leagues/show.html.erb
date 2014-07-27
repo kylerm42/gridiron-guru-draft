@@ -1,1 +1,9 @@
 Welcome to <%= @league.name %>
+
+<ul>
+  <% @league.teams.each do |team| %>
+    <li>
+      <%= link_to team.name, team_url(team) %>
+    </li>
+  <% end %>
+</ul>

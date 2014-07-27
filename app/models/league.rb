@@ -12,10 +12,14 @@
 #
 
 class League < ActiveRecord::Base
+  before_save  :set_default_attributes
+  after_create :fill_league_teams
+
   validates :name, :manager_id, :number_of_teams, presence: true
   validates :password, length: { minimum: 6, allow_nil: true }
 
   belongs_to :manager, class_name: "User"
+  has_many   :teams
 
   attr_reader :password
 
@@ -27,4 +31,17 @@ class League < ActiveRecord::Base
   def password_is?(password)
     BCrypt::Password.new(password_digest).is_password?(password)
   end
+
+  private
+
+    def set_default_attributes
+      number_of_teams = 10
+      manager = current_user
+    end
+
+    def fill_league_teams
+      number_of_teams.times do |idx|
+        teams.build(name: "Team #{idx}", draft_slot: idx)
+      end
+    end
 end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140725031007) do
+ActiveRecord::Schema.define(version: 20140725161624) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -25,6 +25,7 @@ ActiveRecord::Schema.define(version: 20140725031007) do
     t.datetime "updated_at"
   end
 
+  add_index "leagues", ["manager_id"], name: "index_leagues_on_manager_id", using: :btree
   add_index "leagues", ["name"], name: "index_leagues_on_name", using: :btree
 
   create_table "sessions", force: true do |t|
@@ -37,6 +38,19 @@ ActiveRecord::Schema.define(version: 20140725031007) do
 
   add_index "sessions", ["token"], name: "index_sessions_on_token", unique: true, using: :btree
   add_index "sessions", ["user_id"], name: "index_sessions_on_user_id", using: :btree
+
+  create_table "teams", force: true do |t|
+    t.string   "name",       null: false
+    t.integer  "owner_id",   null: false
+    t.integer  "league_id",  null: false
+    t.integer  "draft_slot", null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "teams", ["draft_slot", "league_id"], name: "index_teams_on_draft_slot_and_league_id", unique: true, using: :btree
+  add_index "teams", ["league_id"], name: "index_teams_on_league_id", using: :btree
+  add_index "teams", ["owner_id"], name: "index_teams_on_owner_id", using: :btree
 
   create_table "users", force: true do |t|
     t.string   "username",        null: false

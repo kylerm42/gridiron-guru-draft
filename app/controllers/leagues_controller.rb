@@ -7,8 +7,6 @@ class LeaguesController < ApplicationController
 
   def create
     @league = League.new(permitted_params)
-    @league.number_of_teams = 10
-    @league.manager = current_user
 
     if params[:league][:password] == params[:league][:password_confirm] && @league.save
       set_flash(:success, "You have successfully created a league")
