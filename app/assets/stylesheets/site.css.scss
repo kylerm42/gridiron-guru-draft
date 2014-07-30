@@ -1,0 +1,57 @@
+.header {
+  background-color: #007DBD;
+  color: #fff;
+  padding-top: 40px;
+  padding-bottom: 40px;
+  margin-bottom: 0px;
+  font-size: 24px;
+
+  h1 {
+    font-size: 60px;
+    margin: 0px 380px 10px 40px;
+  }
+
+  p {
+    font-weight: 300;
+    line-height: 1.4;
+    margin: 0px 380px 0px 40px;
+  }
+}
+
+.footer {
+  background-color: #007DBD;
+  color: #fff;
+  font-size: 14px;
+  text-align: center;
+  margin-top: 10px;
+  padding: 10px;
+}
+
+.flash {
+  padding-top: 20px;
+  padding-bottom: 20px;
+  font-size: 16px;
+  margin: 0px;
+  color: #fff;
+}
+
+.flash.flash-error {
+  background-color: #DA0A27;
+  padding-left: 60px;
+}
+
+.flash.flash-success {
+  background-color: #2FC25D;
+  padding-left: 60px;
+}
+
+.flash.flash-info {
+  background-color: #1192D3;
+  padding-left: 60px;
+}
+
+.flash.flash-warning {
+  background-color: #F8BD0A;
+  padding-left: 60px;
+  color: #000;
+}

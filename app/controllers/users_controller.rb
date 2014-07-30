@@ -13,10 +13,10 @@ class UsersController < ApplicationController
 
       redirect_to root_url
     else
-      set_flash(:error,
-                (@user.errors ? @user.errors.full_messages : "Password fields must match"))
+      set_flash_now(:error,
+                (@user.errors.empty? ? "Password fields must match" : @user.errors.full_messages))
 
-      render :new
+      render :new, status: 422
     end
   end
 

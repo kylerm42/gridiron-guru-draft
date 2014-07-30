@@ -18,6 +18,7 @@ ActiveRecord::Schema.define(version: 20140725161624) do
 
   create_table "leagues", force: true do |t|
     t.string   "name",                         null: false
+    t.string   "tagline"
     t.integer  "manager_id",                   null: false
     t.integer  "number_of_teams", default: 10, null: false
     t.string   "password_digest",              null: false
@@ -49,7 +50,6 @@ ActiveRecord::Schema.define(version: 20140725161624) do
   end
 
   add_index "teams", ["draft_slot", "league_id"], name: "index_teams_on_draft_slot_and_league_id", unique: true, using: :btree
-  add_index "teams", ["league_id"], name: "index_teams_on_league_id", using: :btree
   add_index "teams", ["owner_id"], name: "index_teams_on_owner_id", using: :btree
 
   create_table "users", force: true do |t|

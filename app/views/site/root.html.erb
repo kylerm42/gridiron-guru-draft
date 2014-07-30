@@ -1,5 +1,14 @@
-<% if logged_in? %>
-  Welcome, <%= current_user.username %>. <%= link_to "Sign out", sessions_path, method: :destroy %>
-<% else %>
-  <%= link_to "Sign in", new_session_path %> or <%= link_to "create account", new_user_path %>
-<% end %>
+<%= render 'layouts/notices' %>
+
+<div class='container'>
+  <div class='row'>
+    <div class='jumbotron col-md-10 col-md-offset-1'>
+      <h1>Welcome to Gridiron Guru!</h1>
+      <p>Gridiron Guru is a free, fully featured fantasy football draft client. It has all the features your league needs to have an awesome live draft. Create a league to get started now!</p>
+      <div class='col-md-offset-4 col-md-4'>
+        <%= link_to "Create your league!", new_league_url,
+                    class: 'btn btn-default btn-block btn-lg' %>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,22 +1,69 @@
-<%= form_for @user, url: { action: :create } do |f| %>
-  <%= f.label :username %>
-  <%= f.text_field :username %>
+<div class='row'>
+  <div class='col-xs-12 header'>
+    <h1>Create an account</h1>
+    <p>Sign up to start enjoying the greatest fantasy football draft experience!</p>
+  </div>
+</div>
 
-  <%= f.label :password %>
-  <%= f.password_field :password %>
+<%= render 'layouts/notices' %>
 
-  <%= f.label :password_confirm, "Confirm password" %>
-  <%= f.password_field :password_confirm %>
+<div class='container'>
+  <div class='row'>
+    <div class='jumbotron col-md-8 col-md-offset-2'>
 
-  <%= f.label :first_name %>
-  <%= f.text_field :first_name %>
+      <%= form_for @user, url: { action: :create },
+                          html: { class: 'form-horizontal' } do |f| %>
 
-  <%= f.label :last_name %>
-  <%= f.text_field :last_name %>
+        <div class='form-group'>
+          <%= f.label :username, class: 'col-md-2 control-label' %>
+          <div class='col-md-10'>
+            <%= f.text_field :username, class: 'form-control' %>
+          </div>
+        </div>
 
-  <%= f.label :email %>
-  <%= f.text_field :email %>
-  
-  <%= f.submit "Create" %>
-<% end %>
-  
+        <div class='form-group'>
+          <%= f.label :password, class: 'col-md-2 control-label' %>
+          <div class='col-md-10'>
+            <%= f.password_field :password, class: 'form-control' %>
+          </div>
+        </div>
+
+        <div class='form-group'>
+          <%= f.label :password_confirm, "Confirm password",
+                                         class: 'col-md-2 control-label' %>
+          <div class='col-md-10'>
+            <%= f.password_field :password_confirm, class: 'form-control' %>
+          </div>
+        </div>
+
+        <div class='form-group'>
+          <%= f.label :first_name, class: 'col-md-2 control-label' %>
+          <div class='col-md-10'>
+            <%= f.text_field :first_name, class: 'form-control' %>
+          </div>
+        </div>
+
+        <div class='form-group'>
+          <%= f.label :last_name, class: 'col-md-2 control-label' %>
+          <div class='col-md-10'>
+            <%= f.text_field :last_name, class: 'form-control' %>
+          </div>
+        </div>
+
+        <div class='form-group'>
+          <%= f.label :email, class: 'col-md-2 control-label' %>
+          <div class='col-md-10'>
+            <%= f.text_field :email, class: 'form-control' %>
+          </div>
+        </div>
+        
+        <div class='form-group'>
+          <div class='col-md-offset-2 col-md-10'>
+            <%= f.submit "Create", class: 'btn btn-success' %>
+          </div>
+        </div>
+      <% end %>
+        
+    </div>
+  </div>
+</div>

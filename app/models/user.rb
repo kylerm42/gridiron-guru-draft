@@ -13,12 +13,14 @@
 #
 
 class User < ActiveRecord::Base
-  validates :username, presence: true, uniqueness: true
-  validates :email, format: { with: /\A([\w\.%\+\-]+)@([\w\-]+\.)+([\w]{2,})\z/i,
-                              message: "Please enter a valid email address"}
+  validates :username, :email, presence: true, uniqueness: true
+  validates :first_name, :last_name, presence: true
   validates :password, length: { minimum: 6, allow_nil: true }
 
   has_many :sessions
+  has_many :managed_leagues,
+           foreign_key: :manager_id,
+           class_name: "League"
 
   attr_reader :password
 

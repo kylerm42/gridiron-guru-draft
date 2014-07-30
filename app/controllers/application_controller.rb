@@ -19,6 +19,13 @@ class ApplicationController < ActionController::Base
     Session.create!(token: token, user: user)
   end
 
+  def sign_out
+    @session = Session.find_by_token(session[:token])
+    session[:token] = nil
+
+    @session.destroy if @session
+  end
+
   def set_flash(type, message)
     flash[type.to_sym] ||= []
     message.is_a?(String) ? flash[type.to_sym] << message : flash[type.to_sym] += message
@@ -28,4 +35,11 @@ class ApplicationController < ActionController::Base
     flash.now[type.to_sym] ||= []
     message.is_a?(String) ? flash.now[type.to_sym] << message : flash.now[type.to_sym] += message
   end
+
+  FA_FLASH_ICONS = {
+    error: 'exclamation-circle',
+    success: 'check-circle-o',
+    info: 'info-circle',
+    warning: 'question-circle'
+  }
 end

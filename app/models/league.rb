@@ -36,7 +36,6 @@ class League < ActiveRecord::Base
 
     def set_default_attributes
       number_of_teams = 10
-      manager = current_user
     end
 
     def fill_league_teams
