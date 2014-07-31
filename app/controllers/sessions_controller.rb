@@ -18,8 +18,8 @@ class SessionsController < ApplicationController
       redirect_to root_url
     else
       @user = User.new(username: params[:user][:username])
-      set_flash_now(:error, "Invalid username/password combination")
-      render :new
+      set_flash(:error, "Invalid username/password combination")
+      redirect_to root_url
     end
   end
 
