@@ -25,7 +25,6 @@ class Team < ActiveRecord::Base
 
     def set_default_attributes
       draft_slot ||= league.teams.count
-      owner = current_user
     end
 
     def draft_slot_in_range

@@ -1,7 +1,7 @@
 class SessionsController < ApplicationController
   def new
     if logged_in?
-      redirect_to root_url
+      redirect_to root_path
     else
       @user = User.new
 
@@ -15,11 +15,12 @@ class SessionsController < ApplicationController
     if @user
       sign_in(@user)
       set_flash(:success, "Welcome back, #{@user.username}")
-      redirect_to root_url
+      p session[:redirect_to]
+      redirect_to session[:redirect_to] || root_path
     else
       @user = User.new(username: params[:user][:username])
       set_flash(:error, "Invalid username/password combination")
-      redirect_to root_url
+      render :new
     end
   end
 
@@ -28,6 +29,6 @@ class SessionsController < ApplicationController
 
     set_flash(:success, "You have been signed out.")
 
-    redirect_to root_url
+    redirect_to root_path
   end
 end

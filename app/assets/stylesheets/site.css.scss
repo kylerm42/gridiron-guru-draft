@@ -16,6 +16,13 @@
     line-height: 1.4;
     margin: 0px 380px 0px 40px;
   }
+
+  a {
+    color: #7BE849;
+    &:hover {
+      color: #68D636;
+    }
+  }
 }
 
 .footer {

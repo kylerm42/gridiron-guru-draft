@@ -1,4 +1,6 @@
 class LeaguesController < ApplicationController
+  before_action :authenticate_user!, only: [:new, :create]
+
   def new
     @league = League.new
 
@@ -30,5 +32,12 @@ class LeaguesController < ApplicationController
 
     def permitted_params
       params.require(:league).permit(:name, :password, :tagline)
+    end
+
+    def authenticate_user!
+      unless logged_in?
+        set_flash(:warning, 'You must be signed in to do that')
+        redirect_to new_session_path
+      end
     end
 end

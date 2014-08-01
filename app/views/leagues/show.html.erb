@@ -1,9 +1,16 @@
-Welcome to <%= @league.name %>
+<div class='row'>
+  <div class='col-xs-12 header'>
+    <h1><%= @league.name %></h1>
+    <p><%= @league.tagline %></p>
+  </div>
+</div>
+
+<%= render 'layouts/notices' %>
 
 <ul>
   <% @league.teams.each do |team| %>
     <li>
-      <%= link_to team.name, team_url(team) %>
+      <%= link_to team.name, league_team_path(@league, team.draft_slot) %>
     </li>
   <% end %>
 </ul>

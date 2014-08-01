@@ -1,4 +1,7 @@
 class UsersController < ApplicationController
+  before_action :already_signed_in?, only: [:new, :create]
+  before_action :authenticate_user!, except: [:new, :create]
+
   def new
     @user = User.new
     render :new
@@ -11,7 +14,7 @@ class UsersController < ApplicationController
       sign_in(@user)
       set_flash(:success, "You have successfully created an account!")
 
-      redirect_to root_url
+      redirect_to session[:redirect_to] || root_path
     else
       set_flash_now(:error,
                 (@user.errors.empty? ? "Password fields must match" : @user.errors.full_messages))
@@ -25,5 +28,19 @@ class UsersController < ApplicationController
     def permitted_params
       params.require(:user).permit(:username, :email, :first_name,
                                    :last_name, :password)
+    end
+
+    def authenticate_user!
+      unless logged_in?
+        set_flash(:warning, 'You must be signed in to do that')
+        redirect_to new_session_path
+      end
+    end
+
+    def already_signed_in?
+      if logged_in?
+        set_flash(:error, "You already have an account. You can't do that!")
+        redirect_to session[:redirect_to] || root_path
+      end
     end
 end

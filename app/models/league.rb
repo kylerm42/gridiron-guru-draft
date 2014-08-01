@@ -4,6 +4,7 @@
 #
 #  id              :integer          not null, primary key
 #  name            :string(255)      not null
+#  tagline         :string(255)
 #  manager_id      :integer          not null
 #  number_of_teams :integer          default(10), not null
 #  password_digest :string(255)      not null
@@ -12,8 +13,8 @@
 #
 
 class League < ActiveRecord::Base
-  before_save  :set_default_attributes
-  after_create :fill_league_teams
+  before_save :set_default_attributes
+  before_save :fill_league_teams
 
   validates :name, :manager_id, :number_of_teams, presence: true
   validates :password, length: { minimum: 6, allow_nil: true }
@@ -40,7 +41,7 @@ class League < ActiveRecord::Base
 
     def fill_league_teams
       number_of_teams.times do |idx|
-        teams.build(name: "Team #{idx}", draft_slot: idx)
+        teams.build(name: "Team #{idx}", draft_slot: idx, owner: manager)
       end
     end
 end

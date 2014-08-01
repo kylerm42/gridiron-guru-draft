@@ -1,6 +1,8 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 
+  before_action :store_redirect_to
+
   helper_method :current_user, :logged_in?
 
   def current_user
@@ -42,4 +44,15 @@ class ApplicationController < ActionController::Base
     info: 'info-circle',
     warning: 'question-circle'
   }
+
+  private
+
+    def store_redirect_to
+      p request.path
+      return if !request.get? ||
+                    [new_session_path, new_user_path].include?(request.path)
+
+      p request.path
+      session[:redirect_to] = request.path
+    end
 end
