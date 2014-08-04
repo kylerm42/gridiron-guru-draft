@@ -18,26 +18,36 @@ class LeaguesController < ApplicationController
       set_flash_now(:error,
                 (@league.errors.empty? ? "Password fields must match" : @league.errors.full_messages))
 
+      p @league
       render :new, status: 422
     end
   end
 
-  def show
+  def edit
     @league = League.find(params[:id])
 
-    render :show
+    render :edit
+  end
+
+  def update
+    @league = League.find(params[:id])
+    p permitted_params
+
+    if @league.update_attributes(permitted_params)
+      set_flash(:success, 'League successfully updated!')
+
+      redirect_to launchpad_path
+    else
+      set_flash_now(:error, @league.errors.full_messages)
+
+      render :edit
+    end
   end
 
   private
 
     def permitted_params
-      params.require(:league).permit(:name, :password, :tagline)
-    end
-
-    def authenticate_user!
-      unless logged_in?
-        set_flash(:warning, 'You must be signed in to do that')
-        redirect_to new_session_path
-      end
+      params.require(:league).permit(:name, :tagline, positions:
+        League::POSITION_NAMES)
     end
 end

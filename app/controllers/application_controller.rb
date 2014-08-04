@@ -48,11 +48,16 @@ class ApplicationController < ActionController::Base
   private
 
     def store_redirect_to
-      p request.path
       return if !request.get? ||
                     [new_session_path, new_user_path].include?(request.path)
 
-      p request.path
       session[:redirect_to] = request.path
+    end
+
+    def authenticate_user!
+      unless logged_in?
+        set_flash(:warning, 'You must be signed in to do that')
+        redirect_to new_session_path
+      end
     end
 end

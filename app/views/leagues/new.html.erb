@@ -1,15 +1,11 @@
-<div class='row'>
-  <div class='col-xs-12 header'>
-    <h1>Create your league</h1>
-    <p>Hurry up and get your league started!</p>
-  </div>
-</div>
+<%= render 'layouts/header', header: "Create your league",
+           tagline: "Hurry up and get your league started!" %>
 
 <%= render 'layouts/notices' %>
 
 <div class='container'>
   <div class='row'>
-    <div class='jumbotron col-md-8 col-md-offset-2'>
+    <div class='well well-lg col-md-offset-3 col-md-10'>
 
       <%= form_for @league, url: { action: :create },
                             html: { class: 'form-horizontal' } do |f| %>
@@ -17,14 +13,14 @@
         <div class='form-group'>
           <%= f.label :name, 'League name',
                              class: 'col-md-3 control-label' %>
-          <div class='col-md-9'>
+          <div class='col-md-13'>
             <%= f.text_field :name, class: 'form-control' %>
           </div>
         </div>
 
         <div class='form-group'>
           <%= f.label :tagline, class: 'col-md-3 control-label' %>
-          <div class='col-md-9'>
+          <div class='col-md-13'>
             <%= f.text_field :tagline, class: 'form-control' %>
             <p class="help-block">A short statement to describe your league</p>
           </div>
@@ -33,7 +29,7 @@
         <div class='form-group'>
           <%= f.label :password, "League password",
                                 class: 'col-md-3 control-label' %>
-          <div class='col-md-9'>
+          <div class='col-md-13'>
             <%= f.password_field :password, class: 'form-control' %>
           </div>
         </div>
@@ -41,13 +37,13 @@
         <div class='form-group'>
           <%= f.label :password_confirm, "Confirm password",
                                          class: 'col-md-3 control-label' %>
-          <div class='col-md-9'>
+          <div class='col-md-13'>
             <%= f.password_field :password_confirm, class: 'form-control' %>
           </div>
         </div>
         
         <div class='form-group'>
-          <div class='col-md-offset-3 col-md-9'>
+          <div class='col-md-offset-3 col-md-13'>
             <%= f.submit 'Create League', class: 'btn btn-success' %>
           </div>
         </div>

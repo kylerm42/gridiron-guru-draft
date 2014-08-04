@@ -8,21 +8,28 @@
 #  manager_id      :integer          not null
 #  number_of_teams :integer          default(10), not null
 #  password_digest :string(255)      not null
+#  activation_key  :string(255)      not null
+#  positions       :hstore           not null
 #  created_at      :datetime
 #  updated_at      :datetime
 #
 
 class League < ActiveRecord::Base
-  before_save :set_default_attributes
+  after_initialize :set_default_attributes
   before_save :fill_league_teams
 
-  validates :name, :manager_id, :number_of_teams, presence: true
+  validates :name, :manager_id, :number_of_teams, :activation_key, :positions, presence: true
   validates :password, length: { minimum: 6, allow_nil: true }
 
   belongs_to :manager, class_name: "User"
   has_many   :teams
+  has_many   :owners,
+             through: :teams,
+             source: :owner
 
   attr_reader :password
+
+  POSITION_NAMES = ['QB', 'RB', 'WR', 'TE', 'RB/WR/TE', 'K', 'DEF', 'BN']
 
   def password=(secret)
     @password = secret
@@ -36,11 +43,22 @@ class League < ActiveRecord::Base
   private
 
     def set_default_attributes
-      number_of_teams = 10
+      self.number_of_teams ||= 10
+      self.activation_key ||= SecureRandom.urlsafe_base64
+      self.positions ||= {
+        "QB" => 1,
+        "RB" => 2,
+        "WR" => 2,
+        "TE" => 1,
+        "RB/WR/TE" => 1,
+        "K" => 1,
+        "DEF" => 1,
+        "BN" => 6
+      }
     end
 
     def fill_league_teams
-      number_of_teams.times do |idx|
+      (number_of_teams - teams.count).times do |idx|
         teams.build(name: "Team #{idx}", draft_slot: idx, owner: manager)
       end
     end

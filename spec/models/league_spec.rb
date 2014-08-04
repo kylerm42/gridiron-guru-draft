@@ -8,6 +8,8 @@
 #  manager_id      :integer          not null
 #  number_of_teams :integer          default(10), not null
 #  password_digest :string(255)      not null
+#  activation_key  :string(255)      not null
+#  positions       :hstore           not null
 #  created_at      :datetime
 #  updated_at      :datetime
 #

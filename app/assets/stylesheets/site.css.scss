@@ -1,5 +1,11 @@
+$brand-primary: #007DBD;
+$brand-success: #2FC25D;
+$brand-info:    #1192D3;
+$brand-warning: #F8BD0A;
+$brand-danger:  #DA0A27;
+
 .header {
-  background-color: #007DBD;
+  background-color: $brand-primary;
   color: #fff;
   padding-top: 40px;
   padding-bottom: 40px;
@@ -12,7 +18,7 @@
   }
 
   p {
-    font-weight: 300;
+    font-weight: 200;
     line-height: 1.4;
     margin: 0px 380px 0px 40px;
   }
@@ -26,7 +32,7 @@
 }
 
 .footer {
-  background-color: #007DBD;
+  background-color: $brand-primary;
   color: #fff;
   font-size: 14px;
   text-align: center;
@@ -43,22 +49,43 @@
 }
 
 .flash.flash-error {
-  background-color: #DA0A27;
+  background-color: $brand-danger;
   padding-left: 60px;
 }
 
 .flash.flash-success {
-  background-color: #2FC25D;
+  background-color: $brand-success;
   padding-left: 60px;
 }
 
 .flash.flash-info {
-  background-color: #1192D3;
+  background-color: $brand-info;
   padding-left: 60px;
 }
 
 .flash.flash-warning {
-  background-color: #F8BD0A;
+  background-color: $brand-warning;
   padding-left: 60px;
   color: #000;
+}
+
+.notices {
+  margin-bottom: 15px;
+}
+
+.launchpad-title {
+  margin-top: 0px;
+}
+
+.league-actions {
+  margin-left: 15px;
+}
+
+.form-section-header {
+  font-weight: bold;
+}
+
+.help-inline {
+  color: #666;
+  font-weight: 400;
 }

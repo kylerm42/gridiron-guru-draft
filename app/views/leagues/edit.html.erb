@@ -1,0 +1,85 @@
+<%= render 'layouts/header', header: "Updating #{@league.name}",
+           tagline: "You can't always get it right the first time,
+                     but you could try harder. Luckily, you can fix it below." %>
+
+<%= render 'layouts/notices' %>
+
+<div class='container'>
+  <div class='row'>
+    <div class='well well-lg col-md-offset-3 col-md-10'>
+
+      <%= form_for @league, url: { action: :update },
+                            html: { class: 'form-horizontal' } do |f| %>
+
+        <div class='form-group'>
+          <%= f.label :name, 'League name',
+                             class: 'col-md-3 control-label' %>
+          <div class='col-md-13'>
+            <%= f.text_field :name, class: 'form-control' %>
+          </div>
+        </div>
+
+        <div class='form-group'>
+          <%= f.label :tagline, class: 'col-md-3 control-label' %>
+          <div class='col-md-13'>
+            <%= f.text_field :tagline, class: 'form-control' %>
+            <p class='help-block'>A short statement to describe your league</p>
+          </div>
+        </div>
+
+        <div class='row'>
+          <div class='col-md-offset-3 col-md-3'>
+            <p class='form-section-header'>Roster spots</p>
+          </div>
+        </div>
+
+        <%= f.fields_for :positions do |p| %>
+          <div class='form-group'>
+            <%= render 'position_form', position: 'QB', label_size: 3, form: p %>
+            <%= render 'position_form', position: 'RB', label_size: 1, form: p %>
+            <%= render 'position_form', position: 'WR', label_size: 1, form: p %>
+            <%= render 'position_form', position: 'TE', label_size: 1, form: p %>
+          </div>
+          <div class='form-group'>
+            <%= render 'position_form', position: 'RB/WR/TE', label_size: 3, form: p %>
+            <%= render 'position_form', position: 'K', label_size: 1, form: p %>
+            <%= render 'position_form', position: 'DEF', label_size: 1, form: p %>
+            <%= render 'position_form', position: 'BN', label_size: 1, form: p %>
+          </div>
+        <% end %>
+
+        <div class='row'>
+          <div class='col-md-offset-3 col-md-13'>
+            <p class='form-section-header'>
+              Update league password
+              <small class='help-inline'>Leave blank to keep current password</small>
+            </p>
+          </div>
+        </div>
+
+        <div class='form-group'>
+          <%= f.label :password, "League password",
+                                class: 'col-md-3 control-label' %>
+          <div class='col-md-13'>
+            <%= f.password_field :password, class: 'form-control' %>
+          </div>
+        </div>
+
+        <div class='form-group'>
+          <%= f.label :password_confirm, "Confirm password",
+                                         class: 'col-md-3 control-label' %>
+          <div class='col-md-13'>
+            <%= f.password_field :password_confirm, class: 'form-control' %>
+          </div>
+        </div>
+        
+        <div class='form-group'>
+          <div class='col-md-offset-3 col-md-13'>
+            <%= f.submit 'Update League', class: 'btn btn-success' %>
+          </div>
+        </div>
+      <% end %>
+        
+    </div>
+  </div>
+</div>

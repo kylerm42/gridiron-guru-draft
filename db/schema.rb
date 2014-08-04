@@ -15,6 +15,7 @@ ActiveRecord::Schema.define(version: 20140725161624) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+  enable_extension "hstore"
 
   create_table "leagues", force: true do |t|
     t.string   "name",                         null: false
@@ -22,6 +23,8 @@ ActiveRecord::Schema.define(version: 20140725161624) do
     t.integer  "manager_id",                   null: false
     t.integer  "number_of_teams", default: 10, null: false
     t.string   "password_digest",              null: false
+    t.string   "activation_key",               null: false
+    t.hstore   "positions",                    null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -41,10 +44,11 @@ ActiveRecord::Schema.define(version: 20140725161624) do
   add_index "sessions", ["user_id"], name: "index_sessions_on_user_id", using: :btree
 
   create_table "teams", force: true do |t|
-    t.string   "name",       null: false
-    t.integer  "owner_id",   null: false
-    t.integer  "league_id",  null: false
-    t.integer  "draft_slot", null: false
+    t.string   "name",                          null: false
+    t.integer  "owner_id",                      null: false
+    t.integer  "league_id",                     null: false
+    t.integer  "draft_slot",                    null: false
+    t.string   "color",      default: "007DBD", null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end

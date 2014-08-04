@@ -15,11 +15,10 @@ class SessionsController < ApplicationController
     if @user
       sign_in(@user)
       set_flash(:success, "Welcome back, #{@user.username}")
-      p session[:redirect_to]
       redirect_to session[:redirect_to] || root_path
     else
       @user = User.new(username: params[:user][:username])
-      set_flash(:error, "Invalid username/password combination")
+      set_flash_now(:error, "Invalid username/password combination")
       render :new
     end
   end

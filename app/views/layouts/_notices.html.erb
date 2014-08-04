@@ -1,19 +1,21 @@
-<% [:error, :warning, :info, :success].each do |notice_category| %>
-  <% if flash[notice_category] && !flash[notice_category].empty? %>
-    <% flash[notice_category].each do |notice| %>
-      <div class='row'>
-        <div class="flash flash-<%= notice_category %> col-xs-12">
-          <button type="button" class="close" data-dismiss="alert">
-            <span aria-hidden="true">&times;</span>
-            <span class="sr-only">Close</span>
-          </button>
+<div class='notices'>
+  <% [:error, :warning, :info, :success].each do |notice_category| %>
+    <% if flash[notice_category] && !flash[notice_category].empty? %>
+      <% flash[notice_category].each do |notice| %>
+        <div class='row'>
+          <div class="flash flash-<%= notice_category %> col-xs-16">
+            <button type="button" class="close" data-dismiss="alert">
+              <span aria-hidden="true">&times;</span>
+              <span class="sr-only">Close</span>
+            </button>
 
-          <%= fa_icon ApplicationController::FA_FLASH_ICONS[notice_category] %>
+            <%= fa_icon ApplicationController::FA_FLASH_ICONS[notice_category] %>
 
-          <%= notice %>
-          
+            <%= notice %>
+            
+          </div>
         </div>
-      </div>
+      <% end %>
     <% end %>
   <% end %>
-<% end %>
+</div>
