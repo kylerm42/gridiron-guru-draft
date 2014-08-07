@@ -45,7 +45,7 @@ ActiveRecord::Schema.define(version: 20140725161624) do
 
   create_table "teams", force: true do |t|
     t.string   "name",                          null: false
-    t.integer  "owner_id",                      null: false
+    t.integer  "owner_id"
     t.integer  "league_id",                     null: false
     t.integer  "draft_slot",                    null: false
     t.string   "color",      default: "007DBD", null: false

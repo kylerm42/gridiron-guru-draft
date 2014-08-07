@@ -4,7 +4,7 @@
 #
 #  id         :integer          not null, primary key
 #  name       :string(255)      not null
-#  owner_id   :integer          not null
+#  owner_id   :integer
 #  league_id  :integer          not null
 #  draft_slot :integer          not null
 #  color      :string(255)      default("007DBD"), not null

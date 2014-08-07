@@ -1,0 +1,18 @@
+<div class='btn-group pull-right league-actions'>
+  <a type='a' class='btn btn-info'>
+    <%= fa_icon 'users' %>Draft board
+  </a>
+  <div class="btn-group">
+    <a type="a" class="btn btn-info dropdown-toggle" data-toggle="dropdown">
+      Edit teams
+      <span class="caret"></span>
+    </a>
+    <ul class="dropdown-menu" role="menu">
+      <% league.teams.where(owner: current_user).each do |team| %>
+        <li><a href='<%= edit_league_team_path(league, team.draft_slot) %>'>
+          <%= fa_icon 'edit' %>Edit <%= team.name %>
+        </a></li>
+      <% end %>
+    </ul>
+  </div>
+</div>

@@ -1,8 +1,8 @@
-<form action="<%= session_url %>" class='navbar-form navbar-right' method="post">
-    <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
-    <input name="_method" type="hidden" value="delete">
+<form action='<%= session_url %>' class='navbar-form navbar-right' method='post'>
+  <input type='hidden' name='authenticity_token' value='<%= form_authenticity_token %>'>
+  <input name='_method' type='hidden' value='delete'>
 
-    <button class="btn btn-default" type="submit">
-      Sign Out <%= fa_icon 'sign-out' %>
-    </button>
+  <button class='btn btn-default btn-sign-out' type='submit'>
+    Sign Out <%= fa_icon 'sign-out' %>
+  </button>
 </form>

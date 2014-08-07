@@ -16,12 +16,12 @@ i.fa {
   margin-right: 10px;
 }
 
-.btn i.fa {
+.btn-sign-out.btn i.fa {
   margin-left: 5px;
   margin-right: 0px;
 }
 
-.btn-group .btn i.fa {
+.btn i.fa {
   margin-left: 0px;
   margin-right: 10px;
 }
@@ -54,4 +54,8 @@ i.fa {
 
 .dropdown-menu .text-danger {
   color: $brand-danger !important;
+}
+
+a.form-control-static {
+  margin: 10px 0px 10px;
 }

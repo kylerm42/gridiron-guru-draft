@@ -48,6 +48,6 @@ class User < ActiveRecord::Base
   end
 
   def leagues
-    teams.map(&:league).uniq
+    super.distinct
   end
 end

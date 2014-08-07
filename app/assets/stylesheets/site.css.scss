@@ -77,6 +77,10 @@ $brand-danger:  #DA0A27;
   margin-top: 0px;
 }
 
+.launchpad-btns {
+  margin-bottom: 15px;
+}
+
 .league-actions {
   margin-left: 15px;
 }
@@ -88,4 +92,12 @@ $brand-danger:  #DA0A27;
 .help-inline {
   color: #666;
   font-weight: 400;
+}
+
+.input-center {
+  text-align: center;
+}
+
+.label.label-league {
+  display: inline-block;
 }

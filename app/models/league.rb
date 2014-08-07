@@ -16,20 +16,38 @@
 
 class League < ActiveRecord::Base
   after_initialize :set_default_attributes
-  before_save :fill_league_teams
+  before_save :verify_team_count
 
   validates :name, :manager_id, :number_of_teams, :activation_key, :positions, presence: true
   validates :password, length: { minimum: 6, allow_nil: true }
 
-  belongs_to :manager, class_name: "User"
-  has_many   :teams
+  belongs_to :manager,
+             class_name: "User"
   has_many   :owners,
-             through: :teams,
-             source: :owner
+             through:    :teams,
+             source:     :owner
+  has_many   :teams,
+             dependent:  :destroy do
+    
+    def update(team_params)
+      Team.transaction do
+        team_params.each do |id, attributes|
+          p attributes
+          team = Team.find(id)
+          p self.include?(team)
+          team.update_attributes(attributes) if self.include?(team)
+        end
+      end
+    end
+  end
 
   attr_reader :password
 
   POSITION_NAMES = ['QB', 'RB', 'WR', 'TE', 'RB/WR/TE', 'K', 'DEF', 'BN']
+
+  def teams
+    super.order('draft_slot')
+  end
 
   def password=(secret)
     @password = secret
@@ -38,6 +56,26 @@ class League < ActiveRecord::Base
 
   def password_is?(password)
     BCrypt::Password.new(password_digest).is_password?(password)
+  end
+
+  def full?
+    teams.all?(&:owner)
+  end
+
+  def can_join?(password)
+    if full?
+      errors.add(:league, 'is full')
+      false
+    elsif password_is?(password)
+      errors.add(:password, 'is invalid')
+      false
+    else
+      true
+    end     
+  end
+
+  def open_draft_slots
+    (1..number_of_teams).to_a - teams.inject([]) { |draft_slots, team| draft_slots << team.draft_slot }
   end
 
   private
@@ -57,9 +95,11 @@ class League < ActiveRecord::Base
       }
     end
 
-    def fill_league_teams
+    def verify_team_count
       (number_of_teams - teams.count).times do |idx|
-        teams.build(name: "Team #{idx}", draft_slot: idx, owner: manager)
+        teams.build(name: "Team #{idx}")
       end
+
+      teams.first.owner = manager
     end
 end
