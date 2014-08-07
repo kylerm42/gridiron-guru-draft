@@ -13,7 +13,7 @@
 #
 
 class Team < ActiveRecord::Base
-  before_save :set_default_attributes
+  after_initialize :set_default_attributes
 
   validates :name, :league, :draft_slot, :color, presence: true
   validates :draft_slot, uniqueness: { scope: :league_id }
@@ -22,9 +22,7 @@ class Team < ActiveRecord::Base
   validate :draft_slot_in_range
 
   belongs_to :league
-  belongs_to :owner,
-             foreign_key: :owner_id,
-             class_name: "User"
+  belongs_to :owner, class_name: "User"
 
   def color=(hex)
     write_attribute(:color, hex.to_s.upcase)
@@ -43,3 +41,4 @@ class Team < ActiveRecord::Base
       end
     end
 end
+

@@ -16,7 +16,7 @@
 
 class League < ActiveRecord::Base
   after_initialize :set_default_attributes
-  before_save :verify_team_count
+  before_save :fill_league_teams
 
   validates :name, :manager_id, :number_of_teams, :activation_key, :positions, presence: true
   validates :password, length: { minimum: 6, allow_nil: true }
@@ -46,7 +46,7 @@ class League < ActiveRecord::Base
   POSITION_NAMES = ['QB', 'RB', 'WR', 'TE', 'RB/WR/TE', 'K', 'DEF', 'BN']
 
   def teams
-    super.order('draft_slot')
+    persisted? ? super.order(:draft_slot) : super
   end
 
   def password=(secret)
@@ -95,9 +95,9 @@ class League < ActiveRecord::Base
       }
     end
 
-    def verify_team_count
-      (number_of_teams - teams.count).times do |idx|
-        teams.build(name: "Team #{idx}")
+    def fill_league_teams
+      number_of_teams.times do |idx|
+        teams.build(name: "Team #{idx}", draft_slot: open_draft_slots.min)
       end
 
       teams.first.owner = manager
