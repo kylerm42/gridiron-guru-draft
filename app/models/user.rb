@@ -18,9 +18,14 @@ class User < ActiveRecord::Base
   validates :password, length: { minimum: 6, allow_nil: true }
 
   has_many :sessions
+  has_many :teams,
+           foreign_key: :owner_id
   has_many :managed_leagues,
            foreign_key: :manager_id,
            class_name: "League"
+  has_many :leagues,
+           through: :teams,
+           source: :league
 
   attr_reader :password
 
@@ -40,5 +45,9 @@ class User < ActiveRecord::Base
 
   def full_name
     "#{first_name} #{last_name}"
+  end
+
+  def leagues
+    super.distinct
   end
 end

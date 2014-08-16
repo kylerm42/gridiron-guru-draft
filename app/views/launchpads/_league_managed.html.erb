@@ -1,0 +1,29 @@
+<div class='btn-group pull-right league-actions'>
+  <a href=<%= edit_league_path(league) %> class='btn btn-info'>
+    <%= fa_icon 'cogs' %>League settings
+  </a>
+  <a type='a' class='btn btn-info'>
+    <%= fa_icon 'users' %>Draft board
+  </a>
+  <div class="btn-group">
+    <a type="a" class="btn btn-info dropdown-toggle" data-toggle="dropdown">
+      Actions
+      <span class="caret"></span>
+    </a>
+    <ul class="dropdown-menu" role="menu">
+      <% league.teams.where(owner: current_user).each do |team| %>
+        <li><a href='<%= edit_league_team_path(league, team.draft_slot) %>'>
+          <%= fa_icon 'edit' %>Edit <%= team.name %>
+        </a></li>
+      <% end %>
+      <li class='divider'></li>
+      <li><a href="#" class='text-success'>
+        <%= fa_icon 'trophy' %>Begin draft
+      </a></li>
+      <li class='divider'></li>
+      <li><a href="#" class='text-danger'>
+        <%= fa_icon 'trash-o' %>Delete league
+      </a></li>
+    </ul>
+  </div>
+</div>

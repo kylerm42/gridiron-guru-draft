@@ -1,64 +1,60 @@
-<div class='row'>
-  <div class='col-xs-12 header'>
-    <h1>Create an account</h1>
-    <p>Sign up to start enjoying the greatest fantasy football draft experience!</p>
-  </div>
-</div>
+<%= render 'layouts/header', header: "Create an account",
+           tagline: "Sign up to start enjoying the greatest fantasy football draft experience!" %>
 
 <%= render 'layouts/notices' %>
 
 <div class='container'>
   <div class='row'>
-    <div class='jumbotron col-md-8 col-md-offset-2'>
+    <div class='well well-lg col-md-offset-3 col-md-10'>
 
       <%= form_for @user, url: { action: :create },
                           html: { class: 'form-horizontal' } do |f| %>
 
         <div class='form-group'>
-          <%= f.label :username, class: 'col-md-2 control-label' %>
-          <div class='col-md-10'>
+          <%= f.label :username, class: 'col-md-3 control-label' %>
+          <div class='col-md-13'>
             <%= f.text_field :username, class: 'form-control' %>
           </div>
         </div>
 
         <div class='form-group'>
-          <%= f.label :password, class: 'col-md-2 control-label' %>
-          <div class='col-md-10'>
+          <%= f.label :password, class: 'col-md-3 control-label' %>
+          <div class='col-md-13'>
             <%= f.password_field :password, class: 'form-control' %>
           </div>
         </div>
 
         <div class='form-group'>
           <%= f.label :password_confirm, "Confirm password",
-                                         class: 'col-md-2 control-label' %>
-          <div class='col-md-10'>
+                                         class: 'col-md-3 control-label' %>
+          <div class='col-md-13'>
             <%= f.password_field :password_confirm, class: 'form-control' %>
           </div>
         </div>
 
         <div class='form-group'>
-          <%= f.label :first_name, class: 'col-md-2 control-label' %>
-          <div class='col-md-10'>
+          <%= f.label :first_name, class: 'col-md-3 control-label' %>
+          <div class='col-md-13'>
             <%= f.text_field :first_name, class: 'form-control' %>
           </div>
         </div>
 
         <div class='form-group'>
-          <%= f.label :last_name, class: 'col-md-2 control-label' %>
-          <div class='col-md-10'>
+          <%= f.label :last_name, class: 'col-md-3 control-label' %>
+          <div class='col-md-13'>
             <%= f.text_field :last_name, class: 'form-control' %>
           </div>
         </div>
 
         <div class='form-group'>
-          <%= f.label :email, class: 'col-md-2 control-label' %>
-          <div class='col-md-10'>
+          <%= f.label :email, class: 'col-md-3 control-label' %>
+          <div class='col-md-13'>
             <%= f.text_field :email, class: 'form-control' %>
           </div>
         </div>
         
         <div class='form-group'>
-          <div class='col-md-offset-2 col-md-10'>
+          <div class='col-md-offset-3 col-md-13'>
             <%= f.submit "Create", class: 'btn btn-success' %>
           </div>
         </div>

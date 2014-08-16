@@ -13,7 +13,7 @@ class LeaguesController < ApplicationController
     if params[:league][:password] == params[:league][:password_confirm] && @league.save
       set_flash(:success, "You have successfully created a league")
 
-      redirect_to league_url(@league)
+      redirect_to launchpad_path
     else
       set_flash_now(:error,
                 (@league.errors.empty? ? "Password fields must match" : @league.errors.full_messages))
@@ -22,22 +22,57 @@ class LeaguesController < ApplicationController
     end
   end
 
-  def show
+  def edit
     @league = League.find(params[:id])
 
-    render :show
+    render :edit
+  end
+
+  def update
+    @league = League.find(params[:id])
+
+    p params[:league][:team]
+    if @league.teams.update(params[:league][:team]) && @league.update_attributes(permitted_params)
+      set_flash(:success, 'League successfully updated!')
+
+      redirect_to launchpad_path
+    else
+      set_flash_now(:error, @league.errors.full_messages)
+
+      render :edit, status: 422
+    end
+  end
+
+  def invite
+    @league = League.find_by_activation_key(params[:activation_key])
+
+    if @league && @league.full?
+      set_flash(:warning, 'That league is already full')
+      redirect_to launchpad_path
+    else
+      render :invite
+    end
+  end
+
+  def join
+    @league = League.find_by_activation_key(params[:league][:activation_key])
+
+    if @league && @league.can_join?(params[:password])
+      @team = @league.teams.where(owner: nil).order(:draft_slot).first
+      @team.update_attributes(owner: current_user)
+
+      redirect_to launchpad_path
+    else
+      set_flash_now(:error, @league ? @league.errors.full_messages : 'League not found')
+
+      render :invite
+    end
   end
 
   private
 
     def permitted_params
-      params.require(:league).permit(:name, :password, :tagline)
-    end
-
-    def authenticate_user!
-      unless logged_in?
-        set_flash(:warning, 'You must be signed in to do that')
-        redirect_to new_session_path
-      end
+      params.require(:league).permit(:name, :tagline, :password, :team, positions:
+        League::POSITION_NAMES).reject { |key, value| value.blank? }
     end
 end

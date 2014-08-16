@@ -1,0 +1,167 @@
+<%= render 'layouts/header', header: "Updating #{@league.name}",
+           tagline: "You can't always get it right the first time,
+                     but you could try harder. Luckily, you can fix it below." %>
+
+<%= render 'layouts/notices' %>
+
+<div class='container'>
+  <div class='row'>
+    <div class='well well-lg col-md-offset-3 col-md-10'>
+
+      <%= form_for @league, url: { action: :update },
+                            html: { class: 'form-horizontal' } do |f| %>
+
+        <div class='form-group'>
+          <%= f.label :name, 'League name',
+                             class: 'col-md-3 control-label' %>
+          <div class='col-md-13'>
+            <%= f.text_field :name, class: 'form-control' %>
+          </div>
+        </div>
+
+        <div class='form-group'>
+          <%= f.label :tagline, class: 'col-md-3 control-label' %>
+          <div class='col-md-13'>
+            <%= f.text_field :tagline, class: 'form-control' %>
+            <p class='help-block'>A short statement to describe your league</p>
+          </div>
+        </div>
+
+        <div class='row'>
+          <div class='col-md-offset-3 col-md-13'>
+            <p class='form-section-header'>Roster spots</p>
+          </div>
+        </div>
+
+        <%= f.fields_for :positions do |p| %>
+          <div class='form-group'>
+            <%= render 'position_form', position: 'QB', label_size: 3, form: p %>
+            <%= render 'position_form', position: 'RB', label_size: 1, form: p %>
+            <%= render 'position_form', position: 'WR', label_size: 1, form: p %>
+            <%= render 'position_form', position: 'TE', label_size: 1, form: p %>
+          </div>
+          <div class='form-group'>
+            <%= render 'position_form', position: 'RB/WR/TE', label_size: 3, form: p %>
+            <%= render 'position_form', position: 'K', label_size: 1, form: p %>
+            <%= render 'position_form', position: 'DEF', label_size: 1, form: p %>
+            <%= render 'position_form', position: 'BN', label_size: 1, form: p %>
+          </div>
+        <% end %>
+
+        <div class='row'>
+          <div class='col-md-offset-3 col-md-13'>
+            <p class='form-section-header'>
+              Teams &amp; Owners
+            </p>
+          </div>
+        </div>
+
+        <div class='form-group'>
+          <%= f.label :invite, 'Invite URL', class: 'col-md-3 control-label' %>
+          <div class='col-md-13'>
+            <div class='form-control-static'>
+              <a href='<%= invite_leagues_path %>?activation_key=<%= @league.activation_key %>'>
+                 <%= invite_leagues_url %>?activation_key=<%= @league.activation_key %>
+              </a>
+            </div>
+            <small class='help-inline'>
+              Use this link to allow other users to take control of an open team. This owner will have full control and be responsible for drafting the team. As league manager, you will still be able to make selections for any team during the draft, even owned ones. Invited users can take control of any number of teams, but you are able to remove owners at any time.
+            </small>
+          </div>
+        </div>
+
+        <div class='form-group'>
+          <%= f.label :teams, class: 'col-md-3 control-label' %>
+          <div class='col-md-13'>
+            <table class='table table-condensed'>
+              <thead>
+                <tr>
+                  <th class='col-md-6'>Team name</th>
+                  <th class='col-md-5'>Owner</th>
+                  <th class='col-md-2'>Draft slot</th>
+                  <th class='col-md-3'>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% @league.teams.each do |team| %>
+                  <%= f.fields_for team do |t| %>
+                    <% if team.owner == current_user %>
+                      <tr class='success'>
+                    <% elsif team.owner %>
+                      <tr class='info'>
+                    <% else %>
+                      <tr>
+                    <% end %>
+
+                      <td>
+                        <%= team.name %>
+                      </td>
+
+                      <td>
+                        <% if team.owner %>
+                          <%= team.owner.full_name %> <small>(<%= team.owner.username %>)</small>
+                        <% else %>
+                          Open
+                        <% end %>
+                      </td>
+
+                      <td>
+                      <%= t.text_field "#{team.id}][draft_slot", class: 'form-control input-center input-sm',
+                                                                 value: (team.draft_slot) %>
+                      </td>
+
+                      <td>
+                        <% if team.owner && team.owner != current_user %> 
+                          <button type='submit' formmethod='post' formaction='<%= remove_owner_team_path(team) %>' class='btn btn-danger btn-xs'>
+                            <%= fa_icon 'minus-circle' %>Remove owner
+                          </button>
+                        <% elsif !team.owner %>
+                          <a href='<%= invite_leagues_path %>?activation_key=<%= @league.activation_key %>' class='btn btn-xs btn-info btn-block'>
+                            <%= fa_icon 'plus-circle' %>Invite
+                          </a>
+                        <% end %>
+                      </td>
+
+                    </tr>
+                  <% end %>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class='row'>
+          <div class='col-md-offset-3 col-md-13'>
+            <p class='form-section-header'>
+              Update league password
+              <small class='help-inline'>Leave blank to keep current password</small>
+            </p>
+          </div>
+        </div>
+
+        <div class='form-group'>
+          <%= f.label :password, "League password",
+                                class: 'col-md-3 control-label' %>
+          <div class='col-md-13'>
+            <%= f.password_field :password, class: 'form-control' %>
+          </div>
+        </div>
+
+        <div class='form-group'>
+          <%= f.label :password_confirm, "Confirm password",
+                                         class: 'col-md-3 control-label' %>
+          <div class='col-md-13'>
+            <%= f.password_field :password_confirm, class: 'form-control' %>
+          </div>
+        </div>
+        
+        <div class='form-group'>
+          <div class='col-md-offset-3 col-md-13'>
+            <%= f.submit 'Update League', class: 'btn btn-success' %>
+          </div>
+        </div>
+      <% end %>
+        
+    </div>
+  </div>
+</div>

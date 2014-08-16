@@ -1,9 +1,11 @@
+$brand-primary: #007DBD;
+$brand-success: #2FC25D;
+$brand-info:    #1192D3;
+$brand-warning: #F8BD0A;
+$brand-danger:  #DA0A27;
+
 nav.navbar {
   margin-bottom: 0px;
-}
-
-.btn-primary {
-  background-color: #1192D3 !important;
 }
 
 .jumbotron {
@@ -14,11 +16,46 @@ i.fa {
   margin-right: 10px;
 }
 
-.jumbotron p.help-block {
+.btn-sign-out.btn i.fa {
+  margin-left: 5px;
+  margin-right: 0px;
+}
+
+.btn i.fa {
+  margin-left: 0px;
+  margin-right: 10px;
+}
+
+.navbar-brand i.fa {
+  margin-right: 0px
+}
+
+.well p.help-block {
   color: #737373;
   display: block;
-  margin-bottom: 10px;
+  margin-bottom: 0px;
   margin-top: 5px;
   font-size: 14px;
   font-weight: 400;
+}
+
+.jumbotron.bg-primary {
+  background-color: $brand-primary;
+  color: #fff;
+}
+
+.well .progress {
+  margin-bottom: 0px;
+}
+
+.dropdown-menu .text-success {
+  color: $brand-success !important;
+}
+
+.dropdown-menu .text-danger {
+  color: $brand-danger !important;
+}
+
+a.form-control-static {
+  margin: 10px 0px 10px;
 }

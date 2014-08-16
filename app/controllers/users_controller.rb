@@ -30,13 +30,6 @@ class UsersController < ApplicationController
                                    :last_name, :password)
     end
 
-    def authenticate_user!
-      unless logged_in?
-        set_flash(:warning, 'You must be signed in to do that')
-        redirect_to new_session_path
-      end
-    end
-
     def already_signed_in?
       if logged_in?
         set_flash(:error, "You already have an account. You can't do that!")
