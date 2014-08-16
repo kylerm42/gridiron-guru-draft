@@ -17,6 +17,7 @@
 class League < ActiveRecord::Base
   after_initialize :set_default_attributes
   before_save :fill_league_teams
+  before_save :verify_draft_order
 
   validates :name, :manager_id, :number_of_teams, :activation_key, :positions, presence: true
   validates :password, length: { minimum: 6, allow_nil: true }
@@ -32,10 +33,8 @@ class League < ActiveRecord::Base
     def update(team_params)
       Team.transaction do
         team_params.each do |id, attributes|
-          p attributes
           team = Team.find(id)
-          p self.include?(team)
-          team.update_attributes(attributes) if self.include?(team)
+          team.update(attributes) if self.include?(team)
         end
       end
     end
@@ -101,5 +100,13 @@ class League < ActiveRecord::Base
       end
 
       teams.first.owner = manager
+    end
+
+    def verify_draft_order
+      return if open_draft_slots.empty?
+
+      teams.each_with_index do |team, idx|
+        team.update_attributes(draft_slot: idx + 1)
+      end
     end
 end

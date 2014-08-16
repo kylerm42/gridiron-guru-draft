@@ -10,8 +10,6 @@ class LeaguesController < ApplicationController
   def create
     @league = current_user.managed_leagues.build(permitted_params)
 
-
-
     if params[:league][:password] == params[:league][:password_confirm] && @league.save
       set_flash(:success, "You have successfully created a league")
 
@@ -33,7 +31,8 @@ class LeaguesController < ApplicationController
   def update
     @league = League.find(params[:id])
 
-    if @league.update_attributes(permitted_params)
+    p params[:league][:team]
+    if @league.teams.update(params[:league][:team]) && @league.update_attributes(permitted_params)
       set_flash(:success, 'League successfully updated!')
 
       redirect_to launchpad_path

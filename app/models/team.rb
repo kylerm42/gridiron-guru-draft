@@ -16,7 +16,7 @@ class Team < ActiveRecord::Base
   after_initialize :set_default_attributes
 
   validates :name, :league, :draft_slot, :color, presence: true
-  validates :draft_slot, uniqueness: { scope: :league_id }
+  # validates :draft_slot, uniqueness: { scope: :league_id }
   validates :color, format: { with: /\A([\h]{6}|[\h]{3})\Z/i,
                               message: 'must be in valid hex format' }
   validate :draft_slot_in_range
