@@ -21,6 +21,7 @@ Team.find(2).update_attributes(owner: user)
 lines = CSV.open('lib/2013.csv', headers: true)
 
 lines.each do |line|
+  break unless line['name']
   player = Player.new(first_name: line['name'].split('.').first,
                       last_name: line['name'].split('.').last)
 

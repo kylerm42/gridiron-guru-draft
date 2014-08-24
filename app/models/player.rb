@@ -6,14 +6,15 @@
 #  first_name    :string(255)      not null
 #  last_name     :string(255)      not null
 #  position      :string(255)      not null
-#  nfl_team      :string(255)      default("FA"), not null
+#  team          :string(255)      default("FA"), not null
 #  birthdate     :date
 #  college       :string(255)
-#  height        :integer
+#  height        :string(255)
 #  weight        :integer
 #  years_pro     :integer
 #  profile_id    :integer
 #  gsis_id       :string(255)
+#  rank          :integer
 #  pass_yards    :integer          default(0)
 #  pass_tds      :integer          default(0)
 #  pass_ints     :integer          default(0)
@@ -24,17 +25,21 @@
 #  rec_yards     :integer          default(0)
 #  rec_tds       :integer          default(0)
 #  fumbles       :integer          default(0)
-#  two_pt_conv   :integer          default(0)
+#  pass_2_pt     :integer          default(0)
+#  rush_2_pt     :integer          default(0)
+#  rec_2_pt      :integer          default(0)
+#  fg_made_yards :integer          default(0)
+#  fg_miss_yards :integer          default(0)
 #  made_pat      :integer          default(0)
 #  miss_pat      :integer          default(0)
-#  made_20       :integer          default(0)
-#  miss_20       :integer          default(0)
-#  made_30       :integer          default(0)
-#  miss_30       :integer          default(0)
-#  made_40       :integer          default(0)
-#  miss_40       :integer          default(0)
-#  made_50       :integer          default(0)
-#  miss_50       :integer          default(0)
+#  made_0_19     :integer          default(0)
+#  miss_0_19     :integer          default(0)
+#  made_20_29    :integer          default(0)
+#  miss_20_29    :integer          default(0)
+#  made_30_39    :integer          default(0)
+#  miss_30_39    :integer          default(0)
+#  made_40_49    :integer          default(0)
+#  miss_40_49    :integer          default(0)
 #  made_50_plus  :integer          default(0)
 #  miss_50_plus  :integer          default(0)
 #  sacks         :integer          default(0)
@@ -42,13 +47,15 @@
 #  fum_rec       :integer          default(0)
 #  safeties      :integer          default(0)
 #  def_tds       :integer          default(0)
-#  ret_tds       :integer          default(0)
+#  return_tds    :integer          default(0)
 #  pts_allowed   :integer          default(0)
 #  created_at    :datetime
 #  updated_at    :datetime
 #
 
 class Player < ActiveRecord::Base
+
+  # Constants
   POSITIONS = ["QB", "RB", "WR", "TE", "K", "DEF"]
 
   TEAMS = {
@@ -87,7 +94,17 @@ class Player < ActiveRecord::Base
     "OAK" => ["Oakland",       "Raiders"]
   }
 
+  # Validations
   validates :first_name, :last_name, :position, :team, presence: true
   validates :position, inclusion: { in: POSITIONS }
   validates :team, inclusion: { in: TEAMS.keys }
+
+  # Associations
+  has_many :draft_picks
+  has_many :teams,
+           through: :draft_picks,
+           source:  :team
+  has_many :leagues,
+           through: :teams,
+           source:  :league
 end

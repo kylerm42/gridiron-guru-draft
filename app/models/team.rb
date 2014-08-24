@@ -23,6 +23,7 @@ class Team < ActiveRecord::Base
 
   belongs_to :league
   belongs_to :owner, class_name: "User"
+  has_many   :draft_picks
 
   def color=(hex)
     write_attribute(:color, hex.to_s.upcase)

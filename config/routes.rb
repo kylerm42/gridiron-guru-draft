@@ -9,6 +9,9 @@ Rails.application.routes.draw do
       get :invite
       post :join
     end
+    member do
+      get :draft
+    end
     resources :teams, only: [:edit, :show], param: :draft_slot
   end
 
@@ -17,4 +20,8 @@ Rails.application.routes.draw do
       patch :remove_owner
     end
   end
+
+  resources :players, only: [:index, :show]
+
+  resources :draft_picks, only: [:index, :update]
 end

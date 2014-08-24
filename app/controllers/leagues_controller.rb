@@ -69,6 +69,12 @@ class LeaguesController < ApplicationController
     end
   end
 
+  def draft
+    @league = League.find(params[:id])
+
+    render :draft
+  end
+
   private
 
     def permitted_params

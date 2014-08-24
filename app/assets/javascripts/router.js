@@ -1,5 +1,4 @@
-// For more information see: http://emberjs.com/guides/routing/
-
 GridironGuru.Router.map(function() {
-  // this.resource('todos', { path: '/' });
+  this.route('board');
+  this.route('players');
 });

@@ -23,12 +23,18 @@ class League < ActiveRecord::Base
   validates :password, length: { minimum: 6, allow_nil: true }
 
   belongs_to :manager,
-             class_name: "User"
+               class_name: "User"
   has_many   :owners,
-             through:    :teams,
-             source:     :owner
+               through:    :teams,
+               source:     :owner
+  has_many   :draft_picks,
+               through:    :teams,
+               source:     :draft_picks
+  has_many   :drafted_players,
+               through:    :draft_picks,
+               source:     :player
   has_many   :teams,
-             dependent:  :destroy do
+               dependent:  :destroy do
     
     def update(team_params)
       Team.transaction do
