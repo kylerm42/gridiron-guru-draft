@@ -25,8 +25,13 @@
 </thead>
 <tbody>
   {{#each}}
-    <tr>
-      <td></td>
+    <tr {{bind-attr class='position'}}>
+      <td>
+        <button class='btn btn-xs btn-success draft-player'
+          {{bind-attr data-id='id'}} {{action 'draftPlayer' this}}>
+          <i class="fa fa-plus"></i>Draft
+        </button>
+      </td>
       <td>{{rank}}</td>
       <td>{{fullName}}</td>
       <td>{{position}}</td>

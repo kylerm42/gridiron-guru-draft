@@ -1,0 +1,38 @@
+table.table {
+  .QB {
+    background-color: #FFFD85;
+    &:hover {
+      background-color: #F0ED54;
+    }
+  }
+  .RB {
+    background-color: #B0E3FF;
+    &:hover {
+      background-color: #8CD6FF;
+    }
+  }
+  .WR {
+    background-color: #A8FFB4;
+    &:hover {
+      background-color: #87FF98;
+    }
+  }
+  .TE {
+    background-color: #FFADF4;
+    &:hover {
+      background-color: #FF8CF0;
+    }
+  }
+  .K {
+    background-color: #FFC9C9;
+    &:hover {
+      background-color: #FFADAD;
+    }
+  }
+  .DEF {
+    background-color: #D4BAFF;
+    &:hover {
+      background-color: #C3A3F7;
+    }
+  }
+}

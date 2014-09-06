@@ -13,6 +13,7 @@ Rails.application.routes.draw do
       get :draft
     end
     resources :teams, only: [:edit, :show], param: :draft_slot
+    resources :draft_picks, only: [:index, :update]
   end
 
   resources :teams, only: [:update] do
@@ -22,6 +23,4 @@ Rails.application.routes.draw do
   end
 
   resources :players, only: [:index, :show]
-
-  resources :draft_picks, only: [:index, :update]
 end
